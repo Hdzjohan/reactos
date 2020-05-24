@@ -10,6 +10,7 @@
 /* INCLUDES *******************************************************************/
 
 #include <ntoskrnl.h>
+#include <internal/kse.h>
 #define NDEBUG
 #include <debug.h>
 
@@ -3240,6 +3241,9 @@ LoaderScan:
     LdrEntry->LoadedImports = LoadedImports;
 
     /* FIXME: Call driver verifier's loader function */
+
+    /* Call Kernel Shim Engine function */
+    KseDriverLoadImage(LdrEntry);
 
     /* Write-protect the system image */
     MiWriteProtectSystemImage(LdrEntry->DllBase);
